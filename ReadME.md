@@ -1,15 +1,7 @@
 # Live Collaborative To-Do List
 
 A full-stack, real-time, collaborative to-do list application built with the MERN stack (MongoDB, Express, React, Node.js) and TypeScript. Features live updates via WebSockets and user authentication.
-**Live Demo:** [https://TBA>](https://TBA)
-
-## Features
-
-- Real-time collaboration with live updates using Socket.IO.
-- User registration and authentication with JWT.
-- Create, update, and delete tasks.
-- Manage task status (Pending, In Progress, Completed).
-- Fully responsive design for desktop and mobile.
+**Live Demo:** [todo-live.vercel.app](todo-live.vercel.app)
 
 ## API Endpoints
 
