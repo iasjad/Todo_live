@@ -1,0 +1,209 @@
+/* src/styles/App.css */
+
+/*
+  Define CSS Variables for consistent theming.
+  This makes it easy to change colors and spacing across the app.
+*/
+:root {
+  --primary-color: #3498db;
+  --primary-hover: #2980b9;
+  --background-color: #f4f7f6;
+  --container-bg: #ffffff;
+  --text-color: #2c3e50;
+  --border-color: #dfe6e9;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+
+  --status-pending: #bdc3c7; /* Grey */
+  --status-in-progress: #f39c12; /* Orange */
+  --status-completed: #2ecc71; /* Green */
+}
+
+/* --- Base & Mobile-First Styles (Default) --- */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* MODIFIED: Added flex properties to center content */
+.app-container {
+  max-width: 100%;
+  min-height: 100%;
+  margin: 0 auto; /* This centers the container itself */
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This centers the children (header, main) */
+}
+
+/* NEW: Constrain the width of the main content blocks */
+header,
+main {
+  width: 100%;
+  max-width: 960px; /* Adjust this to control content width */
+}
+
+header h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  color: var(--text-color);
+}
+
+.add-task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.add-task-form input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.add-task-form button {
+  padding: 12px 15px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 1rem;
+}
+
+.add-task-form button:hover {
+  background-color: var(--primary-hover);
+}
+
+.todo-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.todo-item {
+  background: var(--container-bg);
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  border-left: 5px solid var(--status-pending);
+}
+
+.todo-item.in-progress {
+  border-left-color: var(--status-in-progress);
+}
+.todo-item.completed {
+  border-left-color: var(--status-completed);
+}
+
+.todo-item.completed p {
+  text-decoration: line-through;
+  color: #95a5a6;
+}
+
+.todo-item p {
+  margin: 0;
+  word-break: break-word;
+}
+
+.task-actions {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+
+.task-actions select {
+  flex-grow: 1;
+}
+
+.task-actions select,
+.task-actions button {
+  padding: 8px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.task-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Adds a small space between the text and the creator */
+}
+
+.task-creator {
+  font-size: 0.75rem;
+  color: #7f8c8d; /* Muted grey color */
+  font-style: italic;
+}
+
+/* Add this to src/styles/App.css */
+.error-message {
+  color: #c0392b;
+  background-color: #fdd;
+  border: 1px solid #c0392b;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* --- Responsive Breakpoints --- */
+
+@media (min-width: 768px) {
+  .app-container {
+    padding: 30px;
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+  }
+
+  .add-task-form {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .add-task-form input {
+    width: auto;
+    flex-grow: 1;
+  }
+
+  .todo-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .todo-item {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .task-actions {
+    width: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  header h1 {
+    font-size: 3rem;
+  }
+
+  .todo-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
