@@ -1,9 +1,3 @@
-/* src/styles/App.css */
-
-/*
-  Define CSS Variables for consistent theming.
-  This makes it easy to change colors and spacing across the app.
-*/
 :root {
   --primary-color: #3498db;
   --primary-hover: #2980b9;
@@ -18,7 +12,6 @@
   --status-completed: #2ecc71; /* Green */
 }
 
-/* --- Base & Mobile-First Styles (Default) --- */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -28,22 +21,20 @@ body {
   color: var(--text-color);
 }
 
-/* MODIFIED: Added flex properties to center content */
 .app-container {
   max-width: 100%;
   min-height: 100%;
-  margin: 0 auto; /* This centers the container itself */
+  margin: 0 auto;
   padding: 15px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* This centers the children (header, main) */
+  align-items: center;
 }
 
-/* NEW: Constrain the width of the main content blocks */
 header,
 main {
   width: 100%;
-  max-width: 960px; /* Adjust this to control content width */
+  max-width: 960px;
 }
 
 header h1 {
@@ -142,16 +133,15 @@ header h1 {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px; /* Adds a small space between the text and the creator */
+  gap: 4px;
 }
 
 .task-creator {
   font-size: 0.75rem;
-  color: #7f8c8d; /* Muted grey color */
+  color: #7f8c8d;
   font-style: italic;
 }
 
-/* Add this to src/styles/App.css */
 .error-message {
   color: #c0392b;
   background-color: #fdd;
@@ -161,8 +151,6 @@ header h1 {
   text-align: center;
   margin-bottom: 20px;
 }
-
-/* --- Responsive Breakpoints --- */
 
 @media (min-width: 768px) {
   .app-container {
