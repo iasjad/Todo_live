@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { Task } from '../types/task';
+import type { User } from '../types/user';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -17,6 +18,11 @@ apiClient.interceptors.request.use((config) => {
   }
   return config;
 });
+
+export const getMe = async (): Promise<User> => {
+  const response = await apiClient.get('/auth/me');
+  return response.data.data;
+};
 
 export const loginUser = async (data: any) => {
   const response = await apiClient.post('/auth/login', data);

@@ -5,12 +5,18 @@ import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import TodoListPage from './pages/TodoListPage';
 import WelcomePage from './pages/WelcomePage';
+import LoadingSpinner from './components/LoadingSpinner';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { token } = useAuth();
-  return token ? <>{children}</> : <Navigate to="/login" />;
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  return user ? <>{children}</> : <Navigate to="/login" />;
 };
 
 const App: React.FC = () => {

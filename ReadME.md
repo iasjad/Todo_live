@@ -1,21 +1,37 @@
 # Live Collaborative To-Do List
 
-A full-stack, real-time, collaborative to-do list application built with the MERN stack (MongoDB, Express, React, Node.js) and TypeScript. Features live updates via WebSockets and user authentication.
+A full-stack, real-time, collaborative to-do list application built with the MERN stack (MongoDB, Express, React, Node.js) and TypeScript. Features live updates via WebSockets, role-based user authentication, and a fully responsive design.
 
 **Live Demo:** [https://todo-live.vercel.app/](https://todo-live.vercel.app/)
 
+---
+
+## Features
+
+- Real-time collaboration with live updates using Socket.IO.
+- User registration and authentication with JWT.
+- Role-based access control:
+  - **Admins** can edit or delete any task.
+  - **Users** can only edit or delete tasks they created.
+- Create, update, and delete tasks on a shared list.
+- Manage task status (Pending, In Progress, Completed).
+- Polished and responsive UI for all devices.
+
+---
+
 ## API Endpoints
 
-All task-related endpoints are protected and require a Bearer token in the Authorization header.
+All endpoints (except for login/register) are protected and require a Bearer token in the `Authorization` header.
 
-## Authentication
+### Authentication
 
-| Method | Endpoint           | Description               | Auth Required |
-| ------ | ------------------ | ------------------------- | ------------- |
-| POST   | /api/auth/register | Registers a new user.     | No            |
-| POST   | /api/auth/login    | Logs in an existing user. | No            |
+| Method | Endpoint           | Description                               | Auth Required |
+| ------ | ------------------ | ----------------------------------------- | ------------- |
+| POST   | /api/auth/register | Registers a new user with the user role   | No            |
+| POST   | /api/auth/login    | Logs in an existing user, returns a token | No            |
+| GET    | /api/auth/me       | Gets the details of the logged-in user    | Yes           |
 
-### Request Body Example:
+**Request Body Example** (`/login` or `/register`):
 
 ```json
 {
@@ -24,7 +40,7 @@ All task-related endpoints are protected and require a Bearer token in the Autho
 }
 ```
 
-### Success Response Example:
+**Success Response Example** (`/login` or `/register`):
 
 ```json
 {
@@ -33,16 +49,16 @@ All task-related endpoints are protected and require a Bearer token in the Autho
 }
 ```
 
-## Tasks (CRUD)
+### Tasks (CRUD)
 
-| Method | Endpoint        | Description                            | Auth Required |
-| ------ | --------------- | -------------------------------------- | ------------- |
-| GET    | /api/tasks      | Fetches all tasks for the shared list. | Yes           |
-| POST   | /api/tasks      | Creates a new task.                    | Yes           |
-| PUT    | /api/tasks/\:id | Updates an existing task's status.     | Yes           |
-| DELETE | /api/tasks/\:id | Deletes a task from the list.          | Yes           |
+| Method | Endpoint       | Description                           | Auth Required |
+| ------ | -------------- | ------------------------------------- | ------------- |
+| GET    | /api/tasks     | Fetches all tasks for the shared list | Yes           |
+| POST   | /api/tasks     | Creates a new task                    | Yes           |
+| PUT    | /api/tasks/:id | Updates an existing task's status     | Yes           |
+| DELETE | /api/tasks/:id | Deletes a task from the list          | Yes           |
 
-### Request Body for POST /api/tasks:
+**Request Body for `POST /api/tasks`:**
 
 ```json
 {
@@ -50,7 +66,7 @@ All task-related endpoints are protected and require a Bearer token in the Autho
 }
 ```
 
-### Request Body for PUT /api/tasks/\:id:
+**Request Body for `PUT /api/tasks/:id`:**
 
 ```json
 {
@@ -58,11 +74,13 @@ All task-related endpoints are protected and require a Bearer token in the Autho
 }
 ```
 
+---
+
 ## Local Setup and Run Instructions
 
 ### Prerequisites
 
-- Node.js
+- Node.js (v18 or newer)
 - npm
 - A MongoDB Atlas account for the database connection string
 
@@ -94,28 +112,27 @@ npm start
 
 ### 2. Frontend Setup
 
-Open a new terminal window for the frontend setup.
+Open a new terminal window:
 
 ```bash
 # Navigate to the frontend directory
-cd Frontend
+cd collaborative-todo
 
 # Install dependencies
 npm install
 ```
 
-Create a `.env` file in the `/Frontend` folder and add:
+Create a `.env` file in the `/collaborative-todo` folder and add:
 
 ```
 VITE_API_URL=http://localhost:5001
 ```
 
-Start the frontend development server:
+Start the React development server:
 
 ```bash
 # Start the React development server
 npm start
 ```
 
-Your application should now be running and accessible at:
-[http://localhost:5173](http://localhost:5173)
+Your application should now be running and accessible at [http://localhost:5173](http://localhost:5173).

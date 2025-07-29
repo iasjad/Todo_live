@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Task } from '../types/task';
+import { useAuth } from '../context/AuthContext';
 
 interface TodoItemProps {
   task: Task;
@@ -12,6 +13,10 @@ const TodoItem: React.FC<TodoItemProps> = ({
   onUpdateStatus,
   onDeleteTask,
 }) => {
+  const { user } = useAuth();
+
+  const canModify = user?.role === 'admin' || user?._id === task.user._id;
+
   return (
     <div className={`todo-item ${task.status.replace(' ', '-')}`}>
       <div className="task-content">
@@ -27,12 +32,15 @@ const TodoItem: React.FC<TodoItemProps> = ({
           onChange={(e) =>
             onUpdateStatus(task._id, e.target.value as Task['status'])
           }
+          disabled={!canModify}
         >
           <option value="pending">Pending</option>
           <option value="in progress">In Progress</option>
           <option value="completed">Completed</option>
         </select>
-        <button onClick={() => onDeleteTask(task._id)}>Delete</button>
+        <button onClick={() => onDeleteTask(task._id)} disabled={!canModify}>
+          Delete
+        </button>
       </div>
     </div>
   );

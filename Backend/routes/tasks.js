@@ -5,7 +5,6 @@ const { protect } = require('../middleware/auth');
 
 router.use(protect);
 
-
 router.get('/', async (req, res) => {
   try {
     const tasks = await Task.find()
@@ -41,17 +40,24 @@ router.post('/', async (req, res) => {
   }
 });
 
-
 router.put('/:id', async (req, res) => {
   try {
+    const task = await Task.findById(req.params.id);
+
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found.' });
+    }
+
+    if (req.user.role !== 'admin' && task.user.toString() !== req.user.id) {
+      return res
+        .status(403)
+        .json({ message: 'User not authorized to update this task.' });
+    }
+
     const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
-    }).populate('user', 'email'); // Added populate for consistency
-
-    if (!updatedTask) {
-      return res.status(404).json({ message: 'Task not found.' });
-    }
+    }).populate('user', 'email');
 
     req.io.emit('task_updated', updatedTask);
     res.status(200).json(updatedTask);
@@ -60,14 +66,21 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-
 router.delete('/:id', async (req, res) => {
   try {
-    const task = await Task.findByIdAndDelete(req.params.id);
+    const task = await Task.findById(req.params.id);
 
     if (!task) {
       return res.status(404).json({ message: 'Task not found.' });
     }
+
+    if (req.user.role !== 'admin' && task.user.toString() !== req.user.id) {
+      return res
+        .status(403)
+        .json({ message: 'User not authorized to delete this task.' });
+    }
+
+    await Task.findByIdAndDelete(req.params.id);
 
     req.io.emit('task_deleted', req.params.id);
     res.status(200).json({ message: 'Task deleted successfully.' });
